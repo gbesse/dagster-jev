@@ -4,10 +4,11 @@ from jev_common import JevClient
 def semantic_asset_check(asset, *, question, text_metadata_key='content', threshold=0.8, client=None):
     import dagster as dg
     judge = client or JevClient(question, threshold=threshold)
+    asset_key = asset.key if hasattr(asset, 'key') else dg.AssetKey.from_coercible(asset)
 
     @dg.asset_check(asset=asset, blocking=True, name='jev_semantic_check')
     def check(context):
-        event = context.get_latest_materialization_event()
+        event = context.instance.get_latest_materialization_event(asset_key)
         if event is None:
             return dg.AssetCheckResult(passed=False, metadata={'jev_route': 'failure'})
         value = event.dagster_event.event_specific_data.materialization.metadata.get(text_metadata_key)
