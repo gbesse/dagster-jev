@@ -18,6 +18,14 @@ Comprobación bloqueante de activos basada en una pregunta Jev.
 
 Instale Dagster, emita metadatos `content` al materializar e incluya la comprobación en `Definitions`. Una respuesta incierta hace fallar la comprobación.
 
+## Exemple hors ligne / Offline example / Ejemplo sin conexión
+
+FR : lancez `python3 -m examples.route_matrix` pour voir les quatre routes sur des valeurs synthétiques. L'entrée vide part en `review` sans appel fournisseur. Aucun serveur de plateforme ni clé API n'est nécessaire.
+
+EN: run `python3 -m examples.route_matrix` to see all four routes on synthetic values. Empty input goes to `review` without a provider call. No platform server or API key is needed.
+
+ES: ejecute `python3 -m examples.route_matrix` para ver las cuatro rutas con valores sintéticos. La entrada vacía va a `review` sin llamar al proveedor. No hace falta un servidor de plataforma ni una clave API.
+
 ## Contract / Contrat / Contrato
 
 `yes`, `no`, `review`, `failure`; threshold default `0.8`. `review` is a real undecided state. Empty or oversized input becomes `review`; transport or invalid-response errors become `failure`. The shared client caps input at 32 KiB, response at 100 KiB, timeout at 10 s and calls at 10,000 per process; YAML templates enforce their own input and response bounds. No raw input is logged by this project. User data goes to the TypeSafe Jev API.
